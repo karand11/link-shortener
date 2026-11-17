@@ -12,7 +12,8 @@ const FILES = {
 };
 const HEADERS = {
   "X-Content-Type-Options": "nosniff",
-  "Content-Security-Policy": "default-src 'self'; frame-ancestors 'none'",
+  // Google Fonts is the only third-party origin the pages load (stylesheet + font files).
+  "Content-Security-Policy": "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-ancestors 'none'",
 };
 const RANGES = [7, 14, 30]; // selectable stats windows, in days
 const DEFAULT_RANGE = 14;

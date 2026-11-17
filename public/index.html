@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Snip Link Shortener</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>
+      <strong>Snip</strong>
+    </a>
+  </header>
+
+  <main>
+    <section id="create" hidden>
+      <h1>Shorten a link</h1>
+      <p class="muted">Paste a long URL, get a short one, and see who clicks it.</p>
+      <form id="form" novalidate>
+        <label>Long URL
+          <input id="url" type="url" required maxlength="2048" placeholder="https://example.com/some/very/long/path" autocomplete="off">
+        </label>
+        <div class="two">
+          <label><span>Custom slug <span class="muted">(optional)</span></span>
+            <input id="slug" type="text" maxlength="32" placeholder="my-link" autocomplete="off" pattern="[A-Za-z0-9_\-]{3,32}">
+          </label>
+          <label>Expires
+            <select id="days">
+              <option value="">Never</option>
+              <option value="1">After 1 day</option>
+              <option value="7">After 7 days</option>
+              <option value="30">After 30 days</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit" class="primary">Shorten</button>
+      </form>
+      <p id="error" class="error" role="alert"></p>
+      <p id="note" class="muted" role="status"></p>
+      <div id="result" class="card" hidden>
+        <a id="short" class="short"></a>
+        <p id="expiry" class="muted"></p>
+        <div class="row">
+          <button id="copy" type="button">Copy</button>
+          <a id="statsLink" class="btn">View stats</a>
+          <button id="del" type="button" class="danger">Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="stats" hidden>
+      <h1><span id="statsShort"></span></h1>
+      <p class="muted">Redirects to <span id="statsUrl" class="url"></span></p>
+      <p id="expires" class="muted"></p>
+      <div class="card">
+        <div class="total"><strong id="total">0</strong> <span class="muted">total clicks</span></div>
+        <div class="head">
+          <h2>Clicks per day <span class="muted">(UTC)</span></h2>
+          <select id="range" aria-label="Date range">
+            <option value="7">Last 7 days</option>
+            <option value="14" selected>Last 14 days</option>
+            <option value="30">Last 30 days</option>
+          </select>
+        </div>
+        <div class="chart">
+          <span id="ymax" class="ymax"></span>
+          <div id="plot" class="plot" role="group" aria-label="Clicks per day"></div>
+          <div class="axis"><span id="xfirst"></span><span id="xlast"></span></div>
+          <div id="tip" class="tip" role="tooltip" hidden></div>
+        </div>
+        <div class="row">
+          <button id="toggle" type="button" aria-expanded="false" aria-controls="table">Show as table</button>
+          <button id="delStats" type="button" class="danger" hidden>Delete link</button>
+        </div>
+        <table id="table" hidden>
+          <caption class="sr">Clicks per day</caption>
+          <thead><tr><th scope="col">Date</th><th scope="col">Clicks</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Top referrers</h2>
+        <ul id="refs" class="refs"></ul>
+      </div>
+      <p id="deleted" class="muted" role="status"></p>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

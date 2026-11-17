@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: link-shortener
+    runtime: node
+    plan: free
+    buildCommand: "true" # no dependencies to install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: TRUST_PROXY # behind Render's proxy, rate-limit by the real client IP
+        value: "1"
